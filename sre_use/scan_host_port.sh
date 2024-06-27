@@ -1,11 +1,22 @@
-#!/bin/bash
-HOST=$1
-PORTS="22 25 80 3306 8080 26088 26089"
-for PORT in $PORTS; do
-    (nc -z -w5 $HOST $PORT) &> /dev/null
-    if [ $? -eq 0 ]; then
-        echo "$PORT is opening....."
-    else
-        echo "$PORT close"
-    fi
-done
+#!/bin/bash -e
+# Poor man TCP port scanner with Bash
+# Author: Jose Vicente Nunez <@josevnz@fosstodon.org>
+if [ -n "$1" ] && [ -f "$1" ]; then
+  while read -r line; do
+    machine=$(echo "$line"| cut -d' ' -f1)|| exit 100
+    ports=$(echo "$line"| cut -d' ' -f2)|| exit 101
+    OLD_IFS=$OLD_IFS
+    IFS=","
+    for port in $ports; do
+      if  (echo >/dev/tcp/"$machine"/"$port") >/dev/null 2>&1; then
+        echo "OK: $machine -> $port"
+      else
+        echo "ERROR: $machine -> $port"
+      fi
+    done
+    IFS=$OLD_IFS
+  done < "$1"
+else
+  echo "ERROR: Invalid or missing data file!"
+  exit 103
+fi
