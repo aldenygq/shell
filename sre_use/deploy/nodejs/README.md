@@ -1,3 +1,5 @@
+# node安装包
+https://nodejs.org/dist/
 # 脚本执行
 sh node-install.sh
 
