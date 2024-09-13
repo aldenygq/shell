@@ -1,0 +1,8 @@
+ipAddressAndPorts=192.168.99.14:9214,192.168.99.32:9232,192.168.99.33:9233,192.168.99.34:9234,192.168.99.35:9235
+curlPath=/usr/bin/curl
+deleteIndexName=.monitoring-kibana-6-*,.monitoring-es-6-*
+saveIndexDays=5
+dayFormate=%Y.%m.%d
+semdEmailTo=1199999874@qq.com
+sendEmailTitle=测试环境ES删除历史索引异常
+sendEmailContent=测试环境ES删除历史索引异常,请尽快登陆,查看并解决问题,然后启动该集群节点。
