@@ -5,20 +5,27 @@
 
 # 定义使用说明
 usage() {
-    echo "Usage: $0 <ak> <sk>"
+    echo "Usage: $0 <account_type> <ak> <sk>"
     echo "ak:配置需要操作的账号ak"
     echo "sk:配置需要操作的账号sk"
+    echo "account_type:配置认证的账号类型,海外账号:oversea,国内账号:inchina"
     exit 1
 }
 # 校验参数数量
-if [ $# -ne 2 ]; then
+if [ $# -ne 3 ]; then
     usage
 fi
 
 export AWS_PAGER=""
-ak=$1
-sk=$2
+ak=$2
+sk=$3
+account_type=$1
 
+if [ "$account_type" == "oversea" ]; then
+    aws configure set region us-west-2
+else
+    aws configure set region cn-north-1
+fi
 aws configure set aws_access_key_id $ak
 aws configure set aws_secret_access_key $sk
 
